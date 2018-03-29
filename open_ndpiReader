@@ -1,0 +1,42 @@
+#! /bin/bash
+App=/usr/src/ndpi-netfilter/nDPI/example
+cd $App
+while :  
+do  
+    case $1 in
+    start)
+    #print PID num
+    echo "                         "
+    echo "                         "
+    echo "#########################"
+    echo "PID Num= $$" >> /tmp/result.txt
+    echo `date` >> /tmp/result.txt
+    ./ndpiReader -i eth0 -s 10&  
+    sleep 30s
+    continue
+    ;;
+    stop)
+        #print PID num
+    echo "                         "
+    echo "      stop the PID                   "
+    echo "#########################"
+    echo "PID Num= $$" >> /tmp/result.txt
+    echo `date` >> /tmp/result.txt
+    Pid=$(ps -ef|grep 'ndpiReader'|awk '{print $2}')
+    echo "$Pid will be killed" >> /tmp/result.txt
+    kill -9 $Pid
+    break
+   ;;
+   restart|force-reload)
+   echo "restart|force-reload will be killed" >> /tmp/result.txt
+   ;;
+   status)
+   echo "status will be killed" >> /tmp/result.txt
+   ;;
+   *)
+   echo "status2 will be killed" >> /tmp/result.txt
+   ;;
+   
+   esac
+done  
+
