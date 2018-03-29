@@ -1,16 +1,30 @@
 #! /bin/bash
 App=/usr/src/ndpi-netfilter/nDPI/example
+Log=/tmp/result.txt
 cd $App
 while :  
 do  
     case $1 in
     start)
+    Sizem=`du -k $Log`
+    Size=`echo $Sizem|cut -b 1-2`
+    echo "Size is $Size" >>$Log
+    if test $Size -eq 100
+    then
+    newfile=$(date -d "today" +"%Y%m%d_%H%M%S")
+    mv $Log $newfile.txt
+    tar -czvf /tmp/$newfile.tar.gz $newfile.txt
+    rm $newfile.txt
+    else
+    echo "$Size is enough for store" >>$Log
+    fi
+
     #print PID num
-    echo "                         "
-    echo "                         "
-    echo "#########################"
-    echo "PID Num= $$" >> /tmp/result.txt
-    echo `date` >> /tmp/result.txt
+    echo "                         " >>$Log
+    echo "                         " >>$Log
+    echo "#########################" >> $Log
+    echo "PID Num= $$" >> $Log
+    echo `date` >> $Log
     ./ndpiReader -i eth0 -s 10&  
     sleep 30s
     continue
@@ -20,21 +34,21 @@ do
     echo "                         "
     echo "      stop the PID                   "
     echo "#########################"
-    echo "PID Num= $$" >> /tmp/result.txt
-    echo `date` >> /tmp/result.txt
+    echo "PID Num= $$" >> $Log
+    echo `date` >> $Log
     Pid=$(ps -ef|grep 'ndpiReader'|awk '{print $2}')
-    echo "$Pid will be killed" >> /tmp/result.txt
+    echo "$Pid will be killed" >> $Log
     kill -9 $Pid
     break
    ;;
    restart|force-reload)
-   echo "restart|force-reload will be killed" >> /tmp/result.txt
+   echo "restart|force-reload will be killed" >> $Log
    ;;
    status)
-   echo "status will be killed" >> /tmp/result.txt
+   echo "status will be killed" >> $Log
    ;;
    *)
-   echo "status2 will be killed" >> /tmp/result.txt
+   echo "status2 will be killed" >> $Log
    ;;
    
    esac
