@@ -758,6 +758,12 @@ char* formatBytes(u_int32_t howMuch, char *buf, u_int buf_len) {
  */
 static void printResults(u_int64_t tot_usec) {
 
+  FILE* result;
+  result = fopen("/tmp/result.txt","a");
+  if(!result)
+  {
+    printf("Warning::Can't open result file,Plz check it\n");
+  }
   u_int32_t i;
   u_int64_t total_flow_bytes = 0;
   u_int avg_pkt_size = 0;
@@ -812,6 +818,12 @@ static void printResults(u_int64_t tot_usec) {
     printf("\tFlow Memory (per flow):  %-13s\n", formatBytes(sizeof(struct ndpi_flow_struct), buf, sizeof(buf)));
     printf("\tActual Memory:           %-13s\n", formatBytes(current_ndpi_memory, buf, sizeof(buf)));
     printf("\tPeak Memory:             %-13s\n", formatBytes(max_ndpi_memory, buf, sizeof(buf)));
+	
+    fprintf(result,"\nnDPI Memory statistics:\n");
+    fprintf(result,"\tnDPI Memory (once):      %-13s\n", formatBytes(sizeof(struct ndpi_detection_module_struct), buf, sizeof(buf)));
+    fprintf(result,"\tFlow Memory (per flow):  %-13s\n", formatBytes(sizeof(struct ndpi_flow_struct), buf, sizeof(buf)));
+    fprintf(result,"\tActual Memory:           %-13s\n", formatBytes(current_ndpi_memory, buf, sizeof(buf)));
+    fprintf(result,"\tPeak Memory:             %-13s\n", formatBytes(max_ndpi_memory, buf, sizeof(buf)));
 
     if(!json_flag) {
       printf("\nTraffic statistics:\n");
@@ -820,6 +832,15 @@ static void printResults(u_int64_t tot_usec) {
       printf("\tDiscarded bytes:       %-13llu\n",
 	     (long long unsigned int)cumulative_stats.total_discarded_bytes);
       printf("\tIP packets:            %-13llu of %llu packets total\n",
+	     (long long unsigned int)cumulative_stats.ip_packet_count,
+	     (long long unsigned int)cumulative_stats.raw_packet_count);
+
+	  fprintf(result,"\nTraffic statistics:\n");
+      fprintf(result,"\tEthernet bytes:        %-13llu (includes ethernet CRC/IFC/trailer)\n",
+	     (long long unsigned int)cumulative_stats.total_wire_bytes);
+      fprintf(result,"\tDiscarded bytes:       %-13llu\n",
+	     (long long unsigned int)cumulative_stats.total_discarded_bytes);
+      fprintf(result,"\tIP packets:            %-13llu of %llu packets total\n",
 	     (long long unsigned int)cumulative_stats.ip_packet_count,
 	     (long long unsigned int)cumulative_stats.raw_packet_count);
       /* In order to prevent Floating point exception in case of no traffic*/
@@ -842,6 +863,25 @@ static void printResults(u_int64_t tot_usec) {
       printf("\tPacket Len 256-1024:   %-13lu\n", (unsigned long)cumulative_stats.packet_len[3]);
       printf("\tPacket Len 1024-1500:  %-13lu\n", (unsigned long)cumulative_stats.packet_len[4]);
       printf("\tPacket Len > 1500:     %-13lu\n", (unsigned long)cumulative_stats.packet_len[5]);
+	  
+      fprintf(result,"\tIP bytes:              %-13llu (avg pkt size %u bytes)\n",
+	     (long long unsigned int)cumulative_stats.total_ip_bytes,avg_pkt_size);
+      fprintf(result,"\tUnique flows:          %-13u\n", cumulative_stats.ndpi_flow_count);
+
+      fprintf(result,"\tTCP Packets:           %-13lu\n", (unsigned long)cumulative_stats.tcp_count);
+      fprintf(result,"\tUDP Packets:           %-13lu\n", (unsigned long)cumulative_stats.udp_count);
+      fprintf(result,"\tVLAN Packets:          %-13lu\n", (unsigned long)cumulative_stats.vlan_count);
+      fprintf(result,"\tMPLS Packets:          %-13lu\n", (unsigned long)cumulative_stats.mpls_count);
+      fprintf(result,"\tPPPoE Packets:         %-13lu\n", (unsigned long)cumulative_stats.pppoe_count);
+      fprintf(result,"\tFragmented Packets:    %-13lu\n", (unsigned long)cumulative_stats.fragmented_count);
+      fprintf(result,"\tMax Packet size:       %-13u\n",   cumulative_stats.max_packet_len);
+      fprintf(result,"\tPacket Len < 64:       %-13lu\n", (unsigned long)cumulative_stats.packet_len[0]);
+      fprintf(result,"\tPacket Len 64-128:     %-13lu\n", (unsigned long)cumulative_stats.packet_len[1]);
+      fprintf(result,"\tPacket Len 128-256:    %-13lu\n", (unsigned long)cumulative_stats.packet_len[2]);
+      fprintf(result,"\tPacket Len 256-1024:   %-13lu\n", (unsigned long)cumulative_stats.packet_len[3]);
+      fprintf(result,"\tPacket Len 1024-1500:  %-13lu\n", (unsigned long)cumulative_stats.packet_len[4]);
+      fprintf(result,"\tPacket Len > 1500:     %-13lu\n", (unsigned long)cumulative_stats.packet_len[5]);
+
 
       if(tot_usec > 0) {
 	char buf[32], buf1[32];
@@ -855,10 +895,18 @@ static void printResults(u_int64_t tot_usec) {
 	b = (float)(cumulative_stats.total_wire_bytes * 8 *1000000)/(float)traffic_duration;
 	printf("\tTraffic throughput:    %s pps / %s/sec\n", formatPackets(t, buf), formatTraffic(b, 1, buf1));
 	printf("\tTraffic duration:      %.3f sec\n", traffic_duration/1000000);
+
+	
+	fprintf(result,"\tnDPI throughput:       %s pps / %s/sec\n", formatPackets(t, buf), formatTraffic(b, 1, buf1));
+	fprintf(result,"\tTraffic throughput:    %s pps / %s/sec\n", formatPackets(t, buf), formatTraffic(b, 1, buf1));
+	fprintf(result,"\tTraffic duration:      %.3f sec\n", traffic_duration/1000000);
       }
 
       if(enable_protocol_guess)
-	printf("\tGuessed flow protos:   %-13u\n", cumulative_stats.guessed_flow_protocols);
+      {
+	    printf("\tGuessed flow protos:   %-13u\n", cumulative_stats.guessed_flow_protocols);
+		fprintf(result,"\tGuessed flow protos:   %-13u\n", cumulative_stats.guessed_flow_protocols);
+      }
     }
   }
 
@@ -899,7 +947,11 @@ static void printResults(u_int64_t tot_usec) {
 #endif
   }
   
-  if((!json_flag) && (!quiet_mode)) printf("\n\nDetected protocols:\n");
+  if((!json_flag) && (!quiet_mode)) 
+  {
+  	printf("\n\nDetected protocols:\n");
+  	fprintf(result,"\n\nDetected protocols:\n");
+  }
   for(i = 0; i <= ndpi_get_num_supported_protocols(ndpi_thread_info[0].workflow->ndpi_struct); i++) {
     ndpi_protocol_breed_t breed = ndpi_get_proto_breed(ndpi_thread_info[0].workflow->ndpi_struct, i);
 
@@ -912,9 +964,20 @@ static void printResults(u_int64_t tot_usec) {
 		(long long unsigned int)cumulative_stats.protocol_counter[i],
 		(long long unsigned int)cumulative_stats.protocol_counter_bytes[i],
 		cumulative_stats.protocol_flows[i]);
+	  fprintf(result, "%s\t%llu\t%llu\t%u\n",
+		  ndpi_get_proto_name(ndpi_thread_info[0].workflow->ndpi_struct, i),
+		  (long long unsigned int)cumulative_stats.protocol_counter[i],
+		  (long long unsigned int)cumulative_stats.protocol_counter_bytes[i],
+		  cumulative_stats.protocol_flows[i]);
 
       if((!json_flag) && (!quiet_mode)) {
 	printf("\t%-20s packets: %-13llu bytes: %-13llu "
+	       "flows: %-13u\n",
+	       ndpi_get_proto_name(ndpi_thread_info[0].workflow->ndpi_struct, i),
+	       (long long unsigned int)cumulative_stats.protocol_counter[i],
+	       (long long unsigned int)cumulative_stats.protocol_counter_bytes[i],
+	       cumulative_stats.protocol_flows[i]);
+   fprintf(result,"\t%-20s packets: %-13llu bytes: %-13llu "
 	       "flows: %-13u\n",
 	       ndpi_get_proto_name(ndpi_thread_info[0].workflow->ndpi_struct, i),
 	       (long long unsigned int)cumulative_stats.protocol_counter[i],
@@ -942,10 +1005,14 @@ static void printResults(u_int64_t tot_usec) {
 
   if((!json_flag) && (!quiet_mode)) {
     printf("\n\nProtocol statistics:\n");
+	fprintf(result,"\n\nProtocol statistics:\n");
 
     for(i=0; i < NUM_BREEDS; i++) {
       if(breed_stats[i] > 0) {
 	printf("\t%-20s %13llu bytes\n",
+	       ndpi_get_proto_breed_name(ndpi_thread_info[0].workflow->ndpi_struct, i),
+	       breed_stats[i]);
+	fprintf(result,"\t%-20s %13llu bytes\n",
 	       ndpi_get_proto_breed_name(ndpi_thread_info[0].workflow->ndpi_struct, i),
 	       breed_stats[i]);
       }
@@ -969,6 +1036,7 @@ static void printResults(u_int64_t tot_usec) {
       if(ndpi_thread_info[thread_id].workflow->stats.protocol_counter[0 /* 0 = Unknown */] > 0) {
         if(!json_flag) {
 	  FILE *out = results_file ? results_file : stdout;
+	      fprintf(result, "\n\nUndetected flows:%s\n", undetected_flows_deleted ? " (expired flows are not listed below)" : "");
 
           fprintf(out, "\n\nUndetected flows:%s\n", undetected_flows_deleted ? " (expired flows are not listed below)" : "");
         }
@@ -1000,6 +1068,7 @@ static void printResults(u_int64_t tot_usec) {
     fclose(json_fp);
 #endif
   }
+ fclose(result);
 }
 
 
