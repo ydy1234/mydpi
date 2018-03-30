@@ -199,6 +199,7 @@
 #define NDPI_PROTOCOL_TELEGRAM				        185 /* Gianluca Costa <g.costa@xplico.org> */
 #define NDPI_PROTOCOL_QUIC				        188 /* Andrea Buscarinu <andrea.buscarinu@gmail.com> - Michele Campus <michelecampus5@gmail.com> */
 #define NDPI_PROTOCOL_WHATSAPP_VOICE			        189
+#define NDPI_PROTOCOL_AMQP                  192
 #define NDPI_PROTOCOL_STARCRAFT 			        211 /* Matteo Bracci <matteobracci1@gmail.com> */
 #define NDPI_PROTOCOL_TEREDO 			                212
 #define NDPI_PROTOCOL_HEP 			                213 /* Sipcapture.org QXIP BV */
@@ -262,6 +263,9 @@
 #define NDPI_PROTOCOL_RX 			        209
 #define NDPI_SERVICE_SINA                               210
 #define NDPI_SERVICE_HANGOUT                            214
+#define NDPI_PROTOCOL_APPLE_PUSH            238
+#define NDPI_PROTOCOL_BJNP                  239
+
 
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */
 #define NDPI_LAST_IMPLEMENTED_PROTOCOL			NDPI_SERVICE_HANGOUT

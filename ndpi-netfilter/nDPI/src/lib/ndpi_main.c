@@ -1558,6 +1558,21 @@ static void ndpi_init_protocol_defaults(struct ndpi_detection_module_struct *ndp
 			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
 			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
     
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_AMQP,
+			    no_master,
+			    no_master, "AMQP", 
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0),   /* TCP */
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0));  /* UDP */
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_APPLE_PUSH,
+			    no_master,
+			    no_master, "ApplePush", 
+			    ndpi_build_default_ports(ports_a, 1, 0, 0, 0, 0),   /* TCP */
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0));  /* UDP */
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_BJNP,
+			   no_master,
+			   no_master, "BJNP", //NDPI_PROTOCOL_CATEGORY_SYSTEM_OS,
+			   ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			   ndpi_build_default_ports(ports_b, 8612, 0, 0, 0, 0) /* UDP */);
 
     /* calling function for host and content matched protocols */
     init_string_based_protocols(ndpi_mod);
@@ -2591,6 +2606,12 @@ void ndpi_set_protocol_detection_bitmask2(struct ndpi_detection_module_struct *n
 
   /* BITTORRENT */
   init_bittorrent_dissector(ndpi_struct, &a, detection_bitmask);
+    /* AMQP */
+  init_amqp_dissector(ndpi_struct, &a, detection_bitmask);
+    /* APPLE_PUSH */
+  init_apple_push_dissector(ndpi_struct, &a, detection_bitmask);
+	/* BJNP */
+  init_bjnp_dissector(ndpi_struct, &a, detection_bitmask);
 
   /* ----------------------------------------------------------------- */
 

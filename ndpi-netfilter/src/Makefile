@@ -15,11 +15,14 @@ xt_ndpi-y := main.o \
                 ${NDPI_SRC}/lib/sort.o \
                 ${NDPI_PRO}/afp.o \
                 ${NDPI_PRO}/aimini.o \
+				${NDPI_PRO}/amqp.o \
+				${NDPI_PRO}/apple_push.o \
                 ${NDPI_PRO}/applejuice.o \
                 ${NDPI_PRO}/armagetron.o \
                 ${NDPI_PRO}/battlefield.o \
                 ${NDPI_PRO}/bgp.o \
                 ${NDPI_PRO}/bittorrent.o \
+				${NDPI_PRO}/bjnp.o \
                 ${NDPI_PRO}/citrix.o \
                 ${NDPI_PRO}/ciscovpn.o \
                 ${NDPI_PRO}/corba.o \
