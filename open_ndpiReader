@@ -1,20 +1,28 @@
 #! /bin/bash
 App=/usr/src/ndpi-netfilter/nDPI/example
-Log=/tmp/result.txt
+LogDir=/tmp
+Log=$LogDir/result.txt
 cd $App
+
+if [ `pwd` != $App ]
+then
+echo "can't enter into $App" 
+exit 0
+fi
+
 while :  
 do  
     case $1 in
     start)
-    Sizem=`du -k $Log`
+    Sizem=`du -m $Log`
     Size=`echo $Sizem|cut -b 1-2`
     echo "Size is $Size" >>$Log
-    if test $Size -eq 4
+    if test $Size -eq 200
     then
     newfile=$(date -d "today" +"%Y%m%d_%H%M%S")
     mv $Log /tmp/$newfile.txt
-    tar -czvf /tmp/$newfile.tar.gz /tmp/$newfile.txt
-    rm /tmp/$newfile.txt
+    tar -czvf $LogDir/$newfile.tar.gz $LogDir/$newfile.txt
+    rm $LogDir/$newfile.txt
     else
     echo "$Size is enough for store" >>$Log
     fi
