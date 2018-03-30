@@ -1046,7 +1046,10 @@ struct ndpi_flow_struct {
   u_int8_t ovpn_session_id[8];
   u_int8_t ovpn_counter;
 #endif
-
+#ifdef NDPI_PROTOCOL_CSGO
+  u_int8_t csgo_strid[18],csgo_state,csgo_s2;
+  u_int32_t csgo_id2;
+#endif
   /* internal structures to save functions calls */
   struct ndpi_packet_struct packet;
   struct ndpi_flow_struct *flow;

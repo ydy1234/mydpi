@@ -18,18 +18,23 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     ndpi_main.c \
 		     protocols/afp.c \
 		     protocols/aimini.c \
+			 protocols/amqp.c \
+			 protocols/apple_push.c \
 		     protocols/applejuice.c \
 		     protocols/armagetron.c \
 		     protocols/ayiya.c \
 		     protocols/battlefield.c \
 		     protocols/bgp.c \
 		     protocols/bittorrent.c \
+			 protocols/bjnp.c \
+			 protocols/checkmk.c \
 		     protocols/ciscovpn.c \
 		     protocols/citrix.c \
 		     protocols/coap.c \
 		     protocols/collectd.c \
 		     protocols/corba.c \
 		     protocols/crossfire.c \
+			 protocols/csgo.c \
 		     protocols/dcerpc.c \
 		     protocols/dhcp.c \
 		     protocols/dhcpv6.c \

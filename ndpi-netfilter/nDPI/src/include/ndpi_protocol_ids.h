@@ -266,7 +266,7 @@
 #define NDPI_PROTOCOL_APPLE_PUSH            238
 #define NDPI_PROTOCOL_BJNP                  239
 #define NDPI_PROTOCOL_CHECKMK               240
-
+#define NDPI_PROTOCOL_CSGO                  241 /* Counter-Strike Global Offensive, Dota 2 */
 
 
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */
