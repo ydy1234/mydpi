@@ -265,6 +265,8 @@
 #define NDPI_SERVICE_HANGOUT                            214
 #define NDPI_PROTOCOL_APPLE_PUSH            238
 #define NDPI_PROTOCOL_BJNP                  239
+#define NDPI_PROTOCOL_CHECKMK               240
+
 
 
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */

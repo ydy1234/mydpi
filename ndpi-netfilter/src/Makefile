@@ -25,6 +25,7 @@ xt_ndpi-y := main.o \
 				${NDPI_PRO}/bjnp.o \
                 ${NDPI_PRO}/citrix.o \
                 ${NDPI_PRO}/ciscovpn.o \
+				${NDPI_PRO}/checkmk.o \
                 ${NDPI_PRO}/corba.o \
                 ${NDPI_PRO}/crossfire.o \
                 ${NDPI_PRO}/dcerpc.o \
