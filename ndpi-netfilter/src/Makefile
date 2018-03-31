@@ -65,6 +65,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/kerberos.o \
                 ${NDPI_PRO}/kontiki.o \
                 ${NDPI_PRO}/ldap.o \
+				${NDPI_PRO}/lisp.o \
                 ${NDPI_PRO}/mail_imap.o \
                 ${NDPI_PRO}/mail_pop.o \
                 ${NDPI_PRO}/mail_smtp.o \

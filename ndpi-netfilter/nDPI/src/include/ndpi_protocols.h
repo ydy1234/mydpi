@@ -197,6 +197,7 @@ void ndpi_search_checkmk(struct ndpi_detection_module_struct *ndpi_struct, struc
 void ndpi_search_csgo(struct ndpi_detection_module_struct *ndpi_struct, struct ndpi_flow_struct *flow);
 void ndpi_search_diameter(struct ndpi_detection_module_struct *ndpi_struct, struct ndpi_flow_struct *flow);
 void ndpi_search_fix(struct ndpi_detection_module_struct *ndpi_struct, struct ndpi_flow_struct *flow);
+void ndpi_search_lisp(struct ndpi_detection_module_struct *ndpi_struct, struct ndpi_flow_struct *flow);
 
 /* --- INIT FUNCTIONS --- */
 void init_afp_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t *id, NDPI_PROTOCOL_BITMASK *detection_bitmask);
@@ -344,5 +345,6 @@ void init_checkmk_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_
 void init_csgo_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t *id, NDPI_PROTOCOL_BITMASK *detection_bitmask);
 void init_diameter_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t *id, NDPI_PROTOCOL_BITMASK *detection_bitmask);
 void init_fix_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t *id, NDPI_PROTOCOL_BITMASK *detection_bitmask);
+void init_lisp_dissector(struct ndpi_detection_module_struct *ndpi_struct, u_int32_t *id, NDPI_PROTOCOL_BITMASK *detection_bitmask);
 
 #endif /* __NDPI_PROTOCOLS_H__ */

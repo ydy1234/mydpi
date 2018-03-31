@@ -1593,6 +1593,11 @@ static void ndpi_init_protocol_defaults(struct ndpi_detection_module_struct *ndp
 			    no_master, "FIX", //NDPI_PROTOCOL_CATEGORY_RPC,
 			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
 			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_LISP,
+			    no_master,
+			    no_master, "LISP", //NDPI_PROTOCOL_CATEGORY_CLOUD,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 4342, 4341, 0, 0, 0) /* UDP */);
     /* calling function for host and content matched protocols */
     init_string_based_protocols(ndpi_mod);
 
@@ -2640,7 +2645,10 @@ void ndpi_set_protocol_detection_bitmask2(struct ndpi_detection_module_struct *n
   /* ----------------------------------------------------------------- */
   /* FIX */
   init_fix_dissector(ndpi_struct, &a, detection_bitmask);
-
+  /* LISP */
+  init_lisp_dissector(ndpi_struct, &a, detection_bitmask);
+  
+  /**************************/
   ndpi_struct->callback_buffer_size = a;
 
   NDPI_LOG(NDPI_PROTOCOL_UNKNOWN, ndpi_struct, NDPI_LOG_DEBUG,
