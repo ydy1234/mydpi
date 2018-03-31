@@ -50,6 +50,7 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     protocols/fasttrack.c \
 		     protocols/fiesta.c \
 		     protocols/filetopia.c \
+			 protocols/fix.c \
 		     protocols/florensia.c \
 		     protocols/ftp_control.c \
 		     protocols/ftp_data.c \

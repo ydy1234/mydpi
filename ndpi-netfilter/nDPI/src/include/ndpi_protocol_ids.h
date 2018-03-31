@@ -268,7 +268,7 @@
 #define NDPI_PROTOCOL_CHECKMK               240
 #define NDPI_PROTOCOL_CSGO                  241 /* Counter-Strike Global Offensive, Dota 2 */
 #define NDPI_PROTOCOL_DIAMETER	            242
-
+#define NDPI_PROTOCOL_FIX                   243
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */
 #define NDPI_LAST_IMPLEMENTED_PROTOCOL			NDPI_SERVICE_HANGOUT
 
