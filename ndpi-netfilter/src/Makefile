@@ -34,6 +34,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/dhcpv6.o \
                 ${NDPI_PRO}/directconnect.o \
                 ${NDPI_PRO}/directdownloadlink.o \
+				${NDPI_PRO}/diameter.o \
                 ${NDPI_PRO}/dns.o \
                 ${NDPI_PRO}/dofus.o \
                 ${NDPI_PRO}/drda.o \
