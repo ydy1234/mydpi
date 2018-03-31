@@ -270,6 +270,96 @@
 #define NDPI_PROTOCOL_DIAMETER	            242
 #define NDPI_PROTOCOL_FIX                   243
 #define NDPI_PROTOCOL_LISP	                244
+#define NDPI_PROTOCOL_NINTENDO              245
+#define NDPI_PROTOCOL_SMPP                  246 /* Damir Franusic <df@release14.org> */
+#define NDPI_PROTOCOL_SOMEIP                247
+#define NDPI_PROTOCOL_TINC                  248 /* William Guglielmo <william@deselmo.com> */
+#define NDPI_PROTOCOL_WHATSAPP              249
+//#define NDPI_PROTOCOL_WHATSAPP_VOICE        250
+#define NDPI_PROTOCOL_WHATSAPP_FILES        251
+#define NDPI_PROTOCOL_SOUNDCLOUD            252
+#define NDPI_PROTOCOL_ICQ                   253
+#define NDPI_PROTOCOL_LINKEDIN              254
+#define NDPI_PROTOCOL_PASTEBIN              255
+#define NDPI_PROTOCOL_PLAYSTATION              256
+#define NDPI_PROTOCOL_SLACK              257
+#define NDPI_PROTOCOL_IQIYI              258
+#define NDPI_PROTOCOL_WINDOWS_UPDATE              259
+#define NDPI_PROTOCOL_FACEBOOK              260
+#define NDPI_PROTOCOL_TWITTER              261
+//#define NDPI_PROTOCOL_PASTEBIN              262
+//#define NDPI_PROTOCOL_PLAYSTATION              263
+//#define NDPI_PROTOCOL_SLACK              264
+//#define NDPI_PROTOCOL_IQIYI              265
+//#define NDPI_PROTOCOL_WINDOWS_UPDATE             266
+#define NDPI_PROTOCOL_WECHAT              267
+
+#define NDPI_PROTOCOL_OPENDNS              268
+#define NDPI_PROTOCOL_MS_ONE_DRIVE              269
+#define NDPI_PROTOCOL_NETFLIX              270
+#define NDPI_PROTOCOL_CLOUDFLARE              271
+#define NDPI_PROTOCOL_OFFICE_365              272
+#define NDPI_PROTOCOL_OCS            273
+#define NDPI_PROTOCOL_IFLIX            274
+#define NDPI_PROTOCOL_APPLE              275
+
+#define NDPI_PROTOCOL_GOOGLE              276
+#define NDPI_PROTOCOL_TWITCH              277
+#define NDPI_PROTOCOL_HOTSPOT_SHIELD              278
+//#define NDPI_PROTOCOL_CLOUDFLARE              279
+#define NDPI_PROTOCOL_GITHUB              280
+#define NDPI_PROTOCOL_AMAZON_VIDEO
+#define NDPI_PROTOCOL_APPLESTORE            282
+#define NDPI_PROTOCOL_APPLE_ITUNES              283
+
+#define NDPI_PROTOCOL_APPLE_ICLOUD              284
+#define NDPI_PROTOCOL_EBAY              285
+#define NDPI_PROTOCOL_OOKLA              286
+#define NDPI_PROTOCOL_GOOGLE_DOCS              287
+#define NDPI_PROTOCOL_GOOGLE_DRIVE              288
+#define NDPI_PROTOCOL_PLAYSTORE
+#define NDPI_PROTOCOL_TRACKER_ADS            289
+#define NDPI_PROTOCOL_GOOGLE_SERVICES              290
+
+#define NDPI_PROTOCOL_AMAZON              291
+#define NDPI_PROTOCOL_CNN              292
+#define NDPI_PROTOCOL_GOOGLE_PLUS              293
+#define NDPI_PROTOCOL_GOOGLE_MAPS              294
+#define NDPI_PROTOCOL_GMAIL              295
+#define NDPI_PROTOCOL_HOTMAIL
+#define NDPI_PROTOCOL_LASTFM            296
+#define NDPI_PROTOCOL_TUENTI              297
+
+#define NDPI_PROTOCOL_WIKIPEDIA              298
+#define NDPI_PROTOCOL_YOUTUBE_UPLOAD              299
+#define NDPI_PROTOCOL_YOUTUBE              300
+#define NDPI_PROTOCOL_VEVO              301
+#define NDPI_PROTOCOL_PANDORA              302
+#define NDPI_PROTOCOL_KAKAOTALK             303
+#define NDPI_PROTOCOL_QUICKPLAY            304
+#define NDPI_PROTOCOL_SINA              305
+#define NDPI_PROTOCOL_SNAPCHAT              306
+#define NDPI_PROTOCOL_INSTAGRAM              307
+#define NDPI_PROTOCOL_WAZE              308
+#define NDPI_PROTOCOL_DEEZER             309
+#define NDPI_PROTOCOL_MICROSOFT             310
+#define NDPI_PROTOCOL_1KXUN
+#define NDPI_PROTOCOL_DNSCRYPT           311
+/*
+#define NDPI_PROTOCOL_APPLE_ITUNES              312
+
+#define NDPI_PROTOCOL_APPLE_ICLOUD              313
+#define NDPI_PROTOCOL_EBAY              314
+#define NDPI_PROTOCOL_OOKLA              315
+#define NDPI_PROTOCOL_GOOGLE_DOCS              316
+#define NDPI_PROTOCOL_GOOGLE_DRIVE             317
+#define NDPI_PROTOCOL_PLAYSTORE            318
+#define NDPI_PROTOCOL_TRACKER_ADS            319
+#define NDPI_PROTOCOL_GOOGLE_SERVICES              310
+*/
+
+
+
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */
 #define NDPI_LAST_IMPLEMENTED_PROTOCOL			NDPI_SERVICE_HANGOUT
 

@@ -586,6 +586,27 @@ void ndpi_search_ssl_tcp(struct ndpi_detection_module_struct *ndpi_struct, struc
     }
     return;
   }
+  {
+	  /* Check if this is whatsapp first (this proto runs over port 443) */
+	  if((packet->payload_packet_len > 5)
+		 && ((packet->payload[0] == 'W')
+		 && (packet->payload[1] == 'A')
+		 && (packet->payload[4] == 0)
+		 && (packet->payload[2] <= 9)
+		 && (packet->payload[3] <= 9))) {
+		ndpi_set_detected_protocol(ndpi_struct, flow, NDPI_PROTOCOL_WHATSAPP, NDPI_PROTOCOL_UNKNOWN);
+		return;
+	  } else if((packet->payload_packet_len == 4)
+			&& (packet->payload[0] == 'W')
+			&& (packet->payload[1] == 'A')) {
+		ndpi_set_detected_protocol(ndpi_struct, flow, NDPI_PROTOCOL_WHATSAPP, NDPI_PROTOCOL_UNKNOWN);
+		return;
+	  } else {
+		/* No whatsapp, let's try SSL */
+		if(sslDetectProtocolFromCertificate(ndpi_struct, flow) > 0)
+	  return;
+	  }
+	}
 
   NDPI_LOG(NDPI_PROTOCOL_SSL, ndpi_struct, NDPI_LOG_DEBUG, "search ssl\n");
 

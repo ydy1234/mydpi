@@ -91,6 +91,7 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     protocols/netbios.c \
 		     protocols/netflow.c \
 		     protocols/nfs.c \
+			 protocols/nintendo.c \
 		     protocols/noe.c \
 		     protocols/non_tcp_udp.c \
 		     protocols/ntp.c \
@@ -122,9 +123,11 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     protocols/skinny.c \
 		     protocols/skype.c \
 		     protocols/smb.c \
+			 protocols/smpp.c \
 		     protocols/snmp.c \
 		     protocols/socks45.c \
 		     protocols/socrates.c \
+			 protocols/someip.c \
 		     protocols/sopcast.c \
 		     protocols/soulseek.c \
 		     protocols/spotify.c \
@@ -142,6 +145,7 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     protocols/telegram.c \
 		     protocols/telnet.c \
 		     protocols/tftp.c \
+			 protocols/tinc.c \
 		     protocols/thunder.c \
 		     protocols/tor.c \
 		     protocols/teredo.c \
@@ -154,6 +158,7 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     protocols/vmware.c \
 		     protocols/vnc.c \
 		     protocols/warcraft3.c \
+			 protocols/whatsapp.c \
 		     protocols/whoisdas.c \
 		     protocols/world_of_kung_fu.c \
 		     protocols/world_of_warcraft.c \
@@ -167,6 +172,8 @@ libndpi_la_SOURCES = ndpi_content_match.c.inc \
 		     third_party/include/ndpi_patricia.h \
 		     third_party/include/node.h \
 		     third_party/include/sort.h \
+			 third_party/include/libcache.h \
+			 third_party/src/libcache.c \
 		     third_party/src/ahocorasick.c \
 		     third_party/src/node.c \
 		     third_party/src/sort.c

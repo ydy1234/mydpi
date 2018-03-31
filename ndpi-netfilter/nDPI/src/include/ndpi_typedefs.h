@@ -368,6 +368,17 @@ typedef enum {
 			       */
 } ndpi_protocol_category_t;
 
+#ifdef NDPI_PROTOCOL_TINC
+
+#define TINC_CACHE_MAX_SIZE 10
+
+PACK_ON struct tinc_cache_entry {
+  u_int32_t src_address;
+  u_int32_t dst_address;
+  u_int16_t dst_port;
+} PACK_OFF;
+
+#endif
 typedef enum {
   HTTP_METHOD_UNKNOWN = 0,
   HTTP_METHOD_OPTIONS,
@@ -885,7 +896,9 @@ struct ndpi_detection_module_struct {
 #endif
 
   ndpi_proto_defaults_t proto_defaults[NDPI_MAX_SUPPORTED_PROTOCOLS+NDPI_MAX_NUM_CUSTOM_PROTOCOLS];
-
+#ifdef NDPI_PROTOCOL_TINC
+  struct cache *tinc_cache;
+#endif
   u_int8_t http_dont_dissect_response:1, dns_dissect_response:1,
     direction_detect_disable:1; /* disable internal detection of packet direction */
 };
@@ -1049,6 +1062,10 @@ struct ndpi_flow_struct {
 #ifdef NDPI_PROTOCOL_CSGO
   u_int8_t csgo_strid[18],csgo_state,csgo_s2;
   u_int32_t csgo_id2;
+#endif
+#ifdef NDPI_PROTOCOL_TINC
+  u_int8_t tinc_state;
+  struct tinc_cache_entry tinc_cache_entry;
 #endif
   /* internal structures to save functions calls */
   struct ndpi_packet_struct packet;

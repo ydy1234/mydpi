@@ -36,6 +36,8 @@
 #include "ndpi_content_match.c.inc"
 #include "third_party/include/ndpi_patricia.h"
 #include "third_party/src/ndpi_patricia.c"
+#include "third_party/include/libcache.h"
+
 
 
 /* implementation of the punycode check function */
@@ -1569,20 +1571,20 @@ static void ndpi_init_protocol_defaults(struct ndpi_detection_module_struct *ndp
 			    ndpi_build_default_ports(ports_a, 1, 0, 0, 0, 0),   /* TCP */
 			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0));  /* UDP */
    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_BJNP,
-			   no_master,
-			   no_master, "BJNP", //NDPI_PROTOCOL_CATEGORY_SYSTEM_OS,
-			   ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
-			   ndpi_build_default_ports(ports_b, 8612, 0, 0, 0, 0) /* UDP */);
+			    no_master,
+			    no_master, "BJNP", //NDPI_PROTOCOL_CATEGORY_SYSTEM_OS,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 8612, 0, 0, 0, 0) /* UDP */);
    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_CHECKMK,
-						   no_master,
-						   no_master, "CHECKMK", //NDPI_PROTOCOL_CATEGORY_DATA_TRANSFER,
-						   ndpi_build_default_ports(ports_a, 6556, 0, 0, 0, 0) /* TCP */,
-						   ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+				no_master,
+				no_master, "CHECKMK", //NDPI_PROTOCOL_CATEGORY_DATA_TRANSFER,
+				ndpi_build_default_ports(ports_a, 6556, 0, 0, 0, 0) /* TCP */,
+				ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_FUN, NDPI_PROTOCOL_CSGO,
-			   no_master,
-			   no_master, "CSGO", //NDPI_PROTOCOL_CATEGORY_GAME,
-			   ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
-			   ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+			    no_master,
+			    no_master, "CSGO", //NDPI_PROTOCOL_CATEGORY_GAME,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_DIAMETER,
 			    no_master,
 			    no_master, "Diameter", //NDPI_PROTOCOL_CATEGORY_WEB,
@@ -1598,6 +1600,41 @@ static void ndpi_init_protocol_defaults(struct ndpi_detection_module_struct *ndp
 			    no_master, "LISP", //NDPI_PROTOCOL_CATEGORY_CLOUD,
 			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
 			    ndpi_build_default_ports(ports_b, 4342, 4341, 0, 0, 0) /* UDP */);
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_FUN, NDPI_PROTOCOL_NINTENDO,
+			    no_master,
+			    no_master, "Nintendo", //NDPI_PROTOCOL_CATEGORY_GAME,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_SMPP,
+			    no_master,
+			    no_master, "SMPP", //NDPI_PROTOCOL_CATEGORY_DOWNLOAD_FT,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0),   /* TCP */
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0));  /* UDP */
+   ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_SOMEIP,
+			    no_master,
+			    no_master, "SOMEIP", //NDPI_PROTOCOL_CATEGORY_RPC,
+			    ndpi_build_default_ports(ports_a, 30491, 30501, 0, 0, 0),  /* TCP */
+			    ndpi_build_default_ports(ports_b, 30491, 30501, 30490, 0, 0)); /* UDP */
+    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_TINC,
+			    no_master,
+			    no_master, "TINC", //NDPI_PROTOCOL_CATEGORY_VPN,
+			    ndpi_build_default_ports(ports_a, 655, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 655, 0, 0, 0, 0) /* UDP */);
+	ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_WHATSAPP_VOICE,
+			    no_master,
+			    no_master, "WhatsAppVoice",// NDPI_PROTOCOL_CATEGORY_VOIP,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_WHATSAPP_FILES,
+			    no_master,
+			    no_master, "WhatsAppFiles", //NDPI_PROTOCOL_CATEGORY_DOWNLOAD_FT,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
+    ndpi_set_proto_defaults(ndpi_mod, NDPI_PROTOCOL_ACCEPTABLE, NDPI_PROTOCOL_WHATSAPP,
+			    no_master,
+			    no_master, "WhatsApp", //NDPI_PROTOCOL_CATEGORY_CHAT,
+			    ndpi_build_default_ports(ports_a, 0, 0, 0, 0, 0) /* TCP */,
+			    ndpi_build_default_ports(ports_b, 0, 0, 0, 0, 0) /* UDP */);
     /* calling function for host and content matched protocols */
     init_string_based_protocols(ndpi_mod);
 
@@ -1858,11 +1895,15 @@ void ndpi_exit_detection_module(struct ndpi_detection_module_struct *ndpi_struct
   if(ndpi_struct != NULL) {
     int i;
 
+
     for(i=0; i<(int)ndpi_struct->ndpi_num_supported_protocols; i++) {
       if(ndpi_struct->proto_defaults[i].protoName)
 	ndpi_free(ndpi_struct->proto_defaults[i].protoName);
     }
-
+#ifdef NDPI_PROTOCOL_TINC
+    if(ndpi_struct->tinc_cache)
+      cache_free((cache_t)(ndpi_struct->tinc_cache));
+#endif
     if(ndpi_struct->protocols_ptree)
       ndpi_Destroy_Patricia((patricia_tree_t*)ndpi_struct->protocols_ptree, free_ptree_data);
 
@@ -2647,7 +2688,16 @@ void ndpi_set_protocol_detection_bitmask2(struct ndpi_detection_module_struct *n
   init_fix_dissector(ndpi_struct, &a, detection_bitmask);
   /* LISP */
   init_lisp_dissector(ndpi_struct, &a, detection_bitmask);
-  
+    /* NINTENDO */
+  init_nintendo_dissector(ndpi_struct, &a, detection_bitmask);
+    /* SMPP */
+  init_smpp_dissector(ndpi_struct, &a, detection_bitmask);
+    /* SOME/IP */
+  init_someip_dissector(ndpi_struct, &a, detection_bitmask);
+    /* TINC */
+  init_tinc_dissector(ndpi_struct, &a, detection_bitmask);
+    /* WHATSAPP */
+  init_whatsapp_dissector(ndpi_struct, &a, detection_bitmask);
   /**************************/
   ndpi_struct->callback_buffer_size = a;
 

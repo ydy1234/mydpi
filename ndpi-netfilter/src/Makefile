@@ -13,6 +13,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_SRC}/lib/ahocorasick.o \
                 ${NDPI_SRC}/lib/node.o \
                 ${NDPI_SRC}/lib/sort.o \
+				${NDPI_SRC}/lib/libcache.o \
                 ${NDPI_PRO}/afp.o \
                 ${NDPI_PRO}/aimini.o \
 				${NDPI_PRO}/amqp.o \
@@ -80,6 +81,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/netbios.o \
                 ${NDPI_PRO}/netflow.o \
                 ${NDPI_PRO}/nfs.o \
+				${NDPI_PRO}/nintendo.o \
                 ${NDPI_PRO}/noe.o \
                 ${NDPI_PRO}/non_tcp_udp.o \
                 ${NDPI_PRO}/ntp.o \
@@ -117,10 +119,12 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/skinny.o \
                 ${NDPI_PRO}/skype.o \
                 ${NDPI_PRO}/smb.o \
+				${NDPI_PRO}/smpp.o \
                 ${NDPI_PRO}/snmp.o \
                 ${NDPI_PRO}/coap.o \
                 ${NDPI_PRO}/socrates.o \
                 ${NDPI_PRO}/socks45.o \
+				${NDPI_PRO}/someip.o \
                 ${NDPI_PRO}/sopcast.o \
                 ${NDPI_PRO}/soulseek.o \
                 ${NDPI_PRO}/spotify.o \
@@ -138,6 +142,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/teamspeak.o \
                 ${NDPI_PRO}/tftp.o \
                 ${NDPI_PRO}/thunder.o \
+				${NDPI_PRO}/tinc.o \
                 ${NDPI_PRO}/tvants.o \
                 ${NDPI_PRO}/tvuplayer.o \
                 ${NDPI_PRO}/tor.o \
@@ -146,6 +151,7 @@ xt_ndpi-y := main.o \
                 ${NDPI_PRO}/vmware.o \
                 ${NDPI_PRO}/vnc.o \
                 ${NDPI_PRO}/warcraft3.o \
+				${NDPI_PRO}/whatsapp.o \
                 ${NDPI_PRO}/world_of_kung_fu.o \
                 ${NDPI_PRO}/world_of_warcraft.o \
                 ${NDPI_PRO}/xbox.o \
