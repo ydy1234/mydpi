@@ -57,7 +57,7 @@ struct xt_ndpi_mtinfo {
 "COLLECTD","SOCKS","MS_LYNC","RTMP","FTP_DATA","WIKIPEDIA","ZMQ","AMAZON","EBAY","CNN","MEGACO","REDIS","PANDO","VHUA","TELEGRAM",\
 "VEVO","PANDORA","QUIC","WHATSAPP_VOICE","EAQ","GIT","DRDA","KAKAOTALK","KAKAOTALK_VOICE","TWITCH","QUICKPLAY","OPENDNS",\
 "MPEGTS","SNAPCHAT","DEEZER","INSTAGRAM","MICROSOFT","HOTSPOT_SHIELD","OCS","OFFICE_365","CLOUDFLARE","MS_ONE_DRIVE","MQTT",\
-"RX","SINA","STARCRAFT","TEREDO","HEP","HANGOUT","CHECK"
+"RX","SINA","STARCRAFT","TEREDO","HEP","HANGOUT","WECHAT","CHECK"
 #endif
 
 #ifndef NDPI_PROTOCOL_SHORT_STRING
@@ -79,7 +79,7 @@ struct xt_ndpi_mtinfo {
 "collectd","socks","ms_lync","rtmp","ftpdata","wikipedia","zmq","amazon","ebay","cnn","megaco","redis","pando","vhua","telegram",\
 "vevo","pandora","quic","whatsapp_voice","eaq","git","drda","kakaotalk","kakaotalk_voice","twitch","quickplay","opendns",\
 "mpegts","snapchat","deezer","instagram","microsoft","hotspot_shield","ocs","office_365","cloudflare","ms_one_drive","mqtt",\
-"rx","sina","starcraft","teredo","hep","hangout","dpi_check"
+"rx","sina","starcraft","teredo","hep","hangout","wechat","dpi_check"
 #endif
 
 #ifndef NDPI_LAST_NFPROTO

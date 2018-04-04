@@ -98,8 +98,9 @@ ndpi_mt_help(void)
 {
         int i;
 
-	printf("ndpi match options:\n");
-        for (i = 1; i <= NDPI_LAST_NFPROTO; i++){
+	printf("ndpi match options:[YDY0]ndpi_Size=%d\n",NDPI_LAST_NFPROTO);
+        for (i = 1; i <= NDPI_LAST_NFPROTO; i++)
+		{
                 printf("--%s Match for %s protocol packets.\n",
                        prot_short_str[i], prot_long_str[i]);
         }
