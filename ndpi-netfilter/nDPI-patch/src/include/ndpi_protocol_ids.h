@@ -303,7 +303,9 @@
 #define NDPI_PROTOCOL_WIKIPEDIA              245
 #define NDPI_PROTOCOL_YOUTUBE_UPLOAD              246
 #define NDPI_PROTOCOL_1KXUN             247
-#define NDPI_PROTOCOL_WHATSAPP          248
+#define NDPI_PROTOCOL_WHATSAPP_FILES          248
+
+#define NDPI_PROTOCOL_WHATSAPP          249
 
 
 
