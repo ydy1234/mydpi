@@ -265,51 +265,54 @@
 #define NDPI_SERVICE_HANGOUT                            214
 //Add new protocol
 #define NDPI_PROTOCOL_WECHAT              215
+#define NDPI_PROTOCOL_SMOBA               216
 
 
-#define NDPI_PROTOCOL_BJNP                  216
-#define NDPI_PROTOCOL_CHECKMK               217
-#define NDPI_PROTOCOL_CSGO                  218 /* Counter-Strike Global Offensive, Dota 2 */
-#define NDPI_PROTOCOL_DIAMETER	            219
-#define NDPI_PROTOCOL_FIX                   220
-#define NDPI_PROTOCOL_LISP	                221
-#define NDPI_PROTOCOL_NINTENDO              222
-#define NDPI_PROTOCOL_SMPP                  223 /* Damir Franusic <df@release14.org> */
-#define NDPI_PROTOCOL_SOMEIP                224
-#define NDPI_PROTOCOL_TINC                  225 /* William Guglielmo <william@deselmo.com> */
-#define NDPI_PROTOCOL_SOUNDCLOUD            226
-#define NDPI_PROTOCOL_ICQ                   227
-#define NDPI_PROTOCOL_LINKEDIN              228
-#define NDPI_PROTOCOL_PASTEBIN              229
-#define NDPI_PROTOCOL_PLAYSTATION              230
+#define NDPI_PROTOCOL_BJNP                  217
+#define NDPI_PROTOCOL_CHECKMK               218
+#define NDPI_PROTOCOL_CSGO                  219 /* Counter-Strike Global Offensive, Dota 2 */
+#define NDPI_PROTOCOL_DIAMETER	            220
+#define NDPI_PROTOCOL_FIX                   221
+#define NDPI_PROTOCOL_LISP	                222
+#define NDPI_PROTOCOL_NINTENDO              223
+#define NDPI_PROTOCOL_SMPP                  224 /* Damir Franusic <df@release14.org> */
+#define NDPI_PROTOCOL_SOMEIP                225
+#define NDPI_PROTOCOL_TINC                  226 /* William Guglielmo <william@deselmo.com> */
+#define NDPI_PROTOCOL_SOUNDCLOUD            227
+#define NDPI_PROTOCOL_ICQ                   228
+#define NDPI_PROTOCOL_LINKEDIN              229
+#define NDPI_PROTOCOL_PASTEBIN              230
+#define NDPI_PROTOCOL_PLAYSTATION              231
 
-#define NDPI_PROTOCOL_IQIYI              231
-#define NDPI_PROTOCOL_APPLE_PUSH         232
-#define NDPI_PROTOCOL_IFLIX              233
-#define NDPI_PROTOCOL_TWITCH             234
-#define NDPI_PROTOCOL_HOTSPOT_SHIELD              235
-#define NDPI_PROTOCOL_GITHUB             236
-#define NDPI_PROTOCOL_AMAZON_VIDEO
-#define NDPI_PROTOCOL_APPLESTORE         237
-#define NDPI_PROTOCOL_DNSCRYPT           238
+#define NDPI_PROTOCOL_IQIYI              232
+#define NDPI_PROTOCOL_APPLE_PUSH         233
+#define NDPI_PROTOCOL_IFLIX              234
+#define NDPI_PROTOCOL_TWITCH             235
+#define NDPI_PROTOCOL_HOTSPOT_SHIELD              236
+#define NDPI_PROTOCOL_GITHUB             237
+#define NDPI_PROTOCOL_AMAZON_VIDEO       238
+#define NDPI_PROTOCOL_APPLESTORE         239
+#define NDPI_PROTOCOL_DNSCRYPT           240
 
-#define NDPI_PROTOCOL_OOKLA              239
-#define NDPI_PROTOCOL_GOOGLE_DOCS              240
-#define NDPI_PROTOCOL_GOOGLE_DRIVE              241
-#define NDPI_PROTOCOL_TRACKER_ADS            242
-#define NDPI_PROTOCOL_GOOGLE_SERVICES              243
-#define NDPI_PROTOCOL_GOOGLE_PLUS              244
+#define NDPI_PROTOCOL_OOKLA              241
+#define NDPI_PROTOCOL_GOOGLE_DOCS              242
+#define NDPI_PROTOCOL_GOOGLE_DRIVE              243
+#define NDPI_PROTOCOL_TRACKER_ADS            244
+#define NDPI_PROTOCOL_GOOGLE_SERVICES              245
+#define NDPI_PROTOCOL_GOOGLE_PLUS              246
 
-#define NDPI_PROTOCOL_WIKIPEDIA              245
-#define NDPI_PROTOCOL_YOUTUBE_UPLOAD              246
-#define NDPI_PROTOCOL_1KXUN             247
+#define NDPI_PROTOCOL_WIKIPEDIA              247
+#define NDPI_PROTOCOL_YOUTUBE_UPLOAD              248
+#define NDPI_PROTOCOL_1KXUN             249
+#define NDPI_PROTOCOL_WHATSAPP          250
+#define NDPI_PROTOCOL_WHATSAPP_FILES            251
 
 
 
 
 
 /* UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE */
-#define NDPI_LAST_IMPLEMENTED_PROTOCOL			NDPI_PROTOCOL_WECHAT
+#define NDPI_LAST_IMPLEMENTED_PROTOCOL			NDPI_PROTOCOL_SMOBA
 
 #define NDPI_MAX_SUPPORTED_PROTOCOLS                    (NDPI_LAST_IMPLEMENTED_PROTOCOL + 1)
 #define NDPI_MAX_NUM_CUSTOM_PROTOCOLS                   (NDPI_NUM_BITS-NDPI_LAST_IMPLEMENTED_PROTOCOL)
