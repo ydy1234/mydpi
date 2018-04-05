@@ -888,6 +888,6 @@ module_exit(ndpi_mt_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("G. Elian Gidoni (main code)");
-MODULE_AUTHOR("YYDDYY_#1");
+MODULE_AUTHOR("YYDDYY_#3");
 MODULE_DESCRIPTION("nDPI YYDD");
 MODULE_ALIAS("ipt_ndpi");
