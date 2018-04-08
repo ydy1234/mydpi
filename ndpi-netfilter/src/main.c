@@ -20,11 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/version.h>
+
 #include <linux/notifier.h>
 #include <linux/netfilter/x_tables.h>
 #include <linux/skbuff.h>
@@ -33,8 +33,12 @@
 #include <linux/rbtree.h>
 #include <linux/kref.h>
 #include <linux/time.h>
-#include <net/tcp.h>
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 4, 47) 
+#include <uapi/linux/pkt_cls.h> 
+#endif
+
+#include <net/tcp.h>
 #include <net/netfilter/nf_conntrack.h>
 #include <net/netfilter/nf_conntrack_ecache.h>
 
@@ -887,7 +891,7 @@ module_init(ndpi_mt_init);
 module_exit(ndpi_mt_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("G. Elian Gidoni (main code)");
-MODULE_AUTHOR("YYDDYY_#3");
+MODULE_AUTHOR("YYDDYY");
+MODULE_AUTHOR("YYDDYY_#4");
 MODULE_DESCRIPTION("nDPI YYDD");
 MODULE_ALIAS("ipt_ndpi");
