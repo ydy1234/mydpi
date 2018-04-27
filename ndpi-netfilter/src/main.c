@@ -34,9 +34,15 @@
 #include <linux/kref.h>
 #include <linux/time.h>
 
+
+
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 4, 47) 
 #include <uapi/linux/pkt_cls.h> 
 #endif
+#include <linux/ctype.h>
+#include <linux/kthread.h>
+#include <net/sock.h>
+#include <net/netlink.h>
 
 #include <net/tcp.h>
 #include <net/netfilter/nf_conntrack.h>
@@ -45,6 +51,16 @@
 #include "ndpi_main.h"
 #include "xt_ndpi.h"
 
+//send usr value
+
+#define NETLINK_TEST 30
+
+#define MAX_PAYLOAD 1024
+
+struct sock *g_nl_sk = NULL;
+int user_space_pid = -1;
+bool timeoutflag=false;
+
 /* Debug param */
 static int debug_dpi = 0;
 module_param(debug_dpi, int, 0);
@@ -52,6 +68,7 @@ MODULE_PARM_DESC(debug_dpi, "Enable syslog debug");
 
 static char *prot_long_str[] = { NDPI_PROTOCOL_LONG_STRING };
 
+char mydect[1024];
 
 /* flow tracking */
 struct osdpi_flow_node {
@@ -97,6 +114,72 @@ DEFINE_SPINLOCK(ipq_lock);
 /* detection */
 static struct ndpi_detection_module_struct *ndpi_struct = NULL;
 static u32 detection_tick_resolution = 1000;
+
+int send_msg_to_user_space(char *message) {
+	if (NULL == g_nl_sk || -1 == user_space_pid) {
+		printk("not connect to user space progress, please wait...data: [%s]\n", message);
+		return -1;
+	}
+
+	int msg_size = strlen(message);
+	struct sk_buff *out_skb = nlmsg_new(msg_size, GFP_ATOMIC);
+	if (NULL == out_skb) {
+		printk(KERN_ERR "alloc_skb error for out_skb\n");
+		return -1;
+	}
+
+	struct nlmsghdr *nlhdr = nlmsg_put(out_skb, 0, 0, NLMSG_DONE, msg_size, 0);
+	if (NULL == nlhdr) {
+		/* nlmsg_free(out_skb); */
+		printk(KERN_ERR "nlmsg_put error\n");
+		return -1;
+	}
+
+	//NETLINK_CB(out_skb).pid = 0;
+	//NETLINK_CB(out_skb).dst_group = 0;
+	//printk(KERN_ERR "YDY PID=%d, Msg=%s\n",user_space_pid,message);
+	strncpy(nlmsg_data(nlhdr), message, msg_size);
+	int ret = nlmsg_unicast(g_nl_sk, out_skb, user_space_pid);
+	printk("nlmsg_unicast: data = [%s], ret = [%d]\n", (char *)nlmsg_data(nlhdr), ret);
+	if(ret<0)
+	{
+	  timeoutflag=true;
+	  //nlmsg_free(out_skb); 
+	  //sleep(20);
+	  return -1;
+	}
+	//nlmsg_free(out_skb); 
+	return 0;
+}
+void nl_data_ready(struct sk_buff *skb);
+static struct netlink_kernel_cfg cfg = {
+      .input = nl_data_ready,
+};
+void nl_data_ready(struct sk_buff *skb)
+{
+	
+	//printk("before get data\n");
+	struct nlmsghdr *nlh = nlmsg_hdr(skb);
+	user_space_pid = nlh->nlmsg_pid;
+
+	char *str = (char *)nlmsg_data(nlh);
+	//printk("received from: [%d], data: [%s]\n", user_space_pid, str);
+	/*
+	int i=0;
+	while(i<=5)
+	{
+	  i++;
+	char *str="my test";
+	if(send_msg_to_user_space(str)==-1)
+	{
+	  printk("jump out and re-transfer [%d]\n", user_space_pid);
+	  break;
+	};
+	printk("send message to pid: [%d]\n", user_space_pid);
+	}
+	*/
+}
+
 
 /* debug functions */
 
@@ -419,7 +502,7 @@ ndpi_process_packet(struct nf_conn * ct, const uint64_t time,
         union nf_inet_addr *ipsrc, *ipdst;
         struct osdpi_id_node *src, *dst;
         struct osdpi_flow_node *flow, *curflow;
-
+    u16 src_port,dst_port;
 	u8 exist_flow=0;
         u64 t1;
         struct timeval tv;
@@ -481,9 +564,33 @@ ndpi_process_packet(struct nf_conn * ct, const uint64_t time,
 		/* Update timeouts */
 		exist_flow=1;
 		if (flow->detected_protocol.protocol) {
+		     if(iph->protocol==IPPROTO_TCP||iph->protocol==IPPROTO_UDP)
+             {
+	          src_port = htons(ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.src.u.tcp.port);
+	          dst_port	= htons(ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.dst.u.tcp.port);
+             }
+             else
+            {
+             src_port=dst_port=0;
+            }
+			 
 			proto = flow->detected_protocol.protocol;
 			if (debug_dpi && flow->detected_protocol.protocol <= NDPI_LAST_NFPROTO)
-				pr_info ("xt_ndpi: flow detected %s ( dst %pI4 )\n", prot_long_str[flow->detected_protocol.protocol], ipdst);
+			{
+			      sprintf(mydect,"Proto %s ( src %pI4:%d--->dst %pI4:%d,ipsize=%d)\n", 
+				              prot_long_str[flow->detected_protocol.protocol], ipsrc,src_port,ipdst,dst_port,ipsize);
+				  //t1_f(NULL,mydect);
+				  if(timeoutflag>0)
+				  {
+                     timeoutflag--;
+				  }
+				  if(timeoutflag==0&&send_msg_to_user_space(mydect)==-1)
+				  {
+                    timeoutflag=5;
+				  }
+				  pr_info ("xt_ndpi: flow detected %s ( src %pI4,srcport=%d--->dst %pI4,dstport=%d,ipsize=%d)\n", 
+				              prot_long_str[flow->detected_protocol.protocol], ipsrc,src_port,ipdst,dst_port,ipsize);
+			}
 			flow->ndpi_timeout = t1;
 			spin_unlock_bh (&flow_lock);
 			return proto;
@@ -545,6 +652,16 @@ ndpi_process_packet(struct nf_conn * ct, const uint64_t time,
 	curflow->detected_protocol = ndpi_detection_process_packet(ndpi_struct,curflow->ndpi_flow,
                                           (uint8_t *) iph, ipsize, time,
                                           src->ndpi_id, dst->ndpi_id);
+   if(iph->protocol==IPPROTO_TCP||iph->protocol==IPPROTO_UDP)
+   {
+	   src_port = htons(ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.src.u.tcp.port);
+	   dst_port	= htons(ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.dst.u.tcp.port);
+   }
+   else
+   {
+       src_port=dst_port=0;
+   }
+
 
 	spin_unlock_bh (&ipq_lock);
 
@@ -560,7 +677,21 @@ ndpi_process_packet(struct nf_conn * ct, const uint64_t time,
 		        if (flow->detected_protocol.protocol != NDPI_PROTOCOL_UNKNOWN) {
 				/* update timeouts */
 				if (debug_dpi && proto <= NDPI_LAST_NFPROTO)
-					pr_info ("xt_ndpi: protocol detected %s ( dst %pI4 )\n", prot_long_str[proto], ipdst);
+				{
+				   	sprintf(mydect,"Proto %s ( src %pI4:%d--->dst %pI4:%d,ipsize=%d)\n", 
+				              prot_long_str[flow->detected_protocol.protocol], ipsrc,src_port,ipdst,dst_port,ipsize);
+					//t1_f(NULL,mydect);
+				  if(timeoutflag>0)
+				  {
+                     timeoutflag--;
+				  }
+				  if(timeoutflag==0&&send_msg_to_user_space(mydect)==-1)
+				  {
+                    timeoutflag=5;
+				  }
+					pr_info ("xt_ndpi: protocol detected %s (deteced pro %d,Pro src %pI4,srcport=%d,dst %pI4,dstport=%d, ipsize=%d )\n", 
+					 prot_long_str[proto], proto,ipsrc,src_port,ipdst,dst_port,ipsize);
+				}
 				flow->ndpi_timeout = t1;
 				flow->detection_completed = 1;
 
@@ -805,7 +936,19 @@ ndpi_mt_reg __read_mostly = {
 
 static int __init ndpi_mt_init(void)
 {
+
         int ret=-ENOMEM, i;
+		
+		g_nl_sk = netlink_kernel_create(&init_net, NETLINK_TEST,// 0,
+							&cfg/*, NULL, THIS_MODULE*/);
+		if (NULL == g_nl_sk) {
+			printk("create sk error\n");
+			return -1;
+		}
+		
+		
+		printk("init netlink_test\n");
+
 
 	pr_info("xt_ndpi 3.0 (nDPI wrapper module).\n");
 
@@ -880,6 +1023,10 @@ err_out:
 
 static void __exit ndpi_mt_exit(void)
 {
+	int ret;
+	netlink_kernel_release(g_nl_sk);
+
+
 	pr_info("xt_ndpi 3.0 unload.\n");
 
 	xt_unregister_match(&ndpi_mt_reg);
