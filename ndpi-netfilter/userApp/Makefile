@@ -1,6 +1,5 @@
 CC = gcc
-CFLAGS = -Wextra -Wall -g -O0 -DDEBUG -lpthread -l sqlite3
-
+CFLAGS = -Wextra -Wall -g -O0 -DDEBUG -lpthread 
 SOURCES = main.c
 BIN_NAME = mynetlink
 

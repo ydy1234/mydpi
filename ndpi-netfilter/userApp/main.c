@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <linux/netlink.h>
 #include <fcntl.h>
-#include <sqlite3.h>
+//#include <sqlite3.h>
 //#include "constants.h"
 
 #define NETLINK_TEST 30
@@ -173,8 +173,8 @@ void CopyToFile(FILE* src,FILE* dst)
 {
   char tmp[1024];
   char dtmp[1024];
-  char dd[4096][1024];
-  char ddn[200][1024];
+  char dd[4096][100];
+  char ddn[4000][100];
   int flag=0;
   int cnt=0;
   int ncnt=0;
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
 		msg.msg_iov = &iov;
 		msg.msg_iovlen = 1;
 
-		if(cnt%2000==0)
+		if(cnt%4000==0)
 		{
 		  fclose(fp);
 		  fp=fopen("dpiResult.txt","a+");
